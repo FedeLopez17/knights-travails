@@ -2,7 +2,7 @@ import allowedMoves from "./allowed-moves.js";
 import Node from "./node.js";
 import Queue from "./queue.js";
 
-function knightMoves(queue, target) {
+export default function knightMoves(queue, target) {
   if (!(queue instanceof Queue)) {
     const startingPoint = queue;
     queue = new Queue();

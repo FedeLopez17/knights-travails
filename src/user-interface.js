@@ -1,5 +1,73 @@
 import "./style.css";
 import knightMoves from "./knights-travails.js";
+import {
+  clearKnight,
+  clearMoves,
+  clearTarget,
+  placeKnight,
+  setTarget,
+} from "./ui-cells-functions";
+import traverse from "./traverse";
+
+const body = document.querySelector("body");
+
+// Cursor modes:
+let placeKnightCursor = false;
+let setTargetCursor = false;
+
+function displayKnightCursor() {
+  clearKnight();
+
+  const knightCursor = document.createElement("section");
+  knightCursor.classList.add("custom-cursor", "hidden");
+  knightCursor.id = "knight-cursor";
+  const cell = document.querySelector(".cell");
+  const cellsWidth = window.getComputedStyle(cell).getPropertyValue("width");
+  knightCursor.style.width = cellsWidth;
+  body.addEventListener("mousemove", (event) => {
+    knightCursor.classList.remove("hidden");
+    knightCursor.style.left = `calc(${event.clientX}px - ${cellsWidth}/2)`;
+    knightCursor.style.top = `calc(${event.clientY}px - ${cellsWidth}/2)`;
+  });
+  body.appendChild(knightCursor);
+  body.classList.add("place-knight");
+}
+
+function removeKnightCursor() {
+  const knightCursor = document.querySelector("#knight-cursor");
+  if (knightCursor) knightCursor.remove();
+  body.classList.remove("place-knight");
+}
+
+function checkTraverseButtonState() {
+  const knight = document.querySelector("#knight-piece");
+  const target = document.querySelector("#target");
+  const traverseButton = document.querySelector("button#traverse");
+  traverseButton.disabled = !(knight && target);
+}
+
+function togglePlaceKnightCursor() {
+  placeKnightCursor = !placeKnightCursor;
+  placeKnightCursor ? displayKnightCursor() : removeKnightCursor();
+  placeKnightButton.classList.toggle("active");
+  setTargetCursor = false;
+  setTargetButton.classList.remove("active");
+  body.classList.remove("set-target");
+  checkTraverseButtonState();
+}
+
+function toggleSetTargetCursor() {
+  setTargetCursor = !setTargetCursor;
+  if (setTargetCursor) clearTarget();
+  setTargetButton.classList.toggle("active");
+  body.classList.toggle("set-target");
+  placeKnightCursor = false;
+  placeKnightButton.classList.remove("active");
+  const knight = document.querySelector("#knight-piece");
+  if (knight) knight.style.opacity = 1;
+  removeKnightCursor();
+  checkTraverseButtonState();
+}
 
 // Build chess board:
 
@@ -20,7 +88,17 @@ for (let column = 0; column < CHESSBOARD_WIDTH; column++) {
     cell.classList.add("cell");
     const cellColor = row % 2 === 0 ? COLUMN_COLORS.even : COLUMN_COLORS.odd;
     cell.classList.add(cellColor);
-    cell.setAttribute("data-position", JSON.stringify({ x: column, y: row }));
+    cell.setAttribute("data-position-x", column);
+    cell.setAttribute("data-position-y", row);
+    cell.addEventListener("click", () => {
+      if (placeKnightCursor) {
+        placeKnight(cell);
+        togglePlaceKnightCursor();
+      } else if (setTargetCursor) {
+        setTarget(cell);
+        toggleSetTargetCursor();
+      }
+    });
 
     if (column === 0 && row === 0) {
       cell.id = "column-zero-row-zero";
@@ -58,19 +136,49 @@ const controls = document.querySelector("#controls");
 const placeKnightButton = document.createElement("button");
 placeKnightButton.id = "place-knight";
 placeKnightButton.innerText = "Place Knight";
+placeKnightButton.addEventListener("click", togglePlaceKnightCursor);
 controls.appendChild(placeKnightButton);
 
-const chooseTargetButton = document.createElement("button");
-chooseTargetButton.id = "choose-target";
-chooseTargetButton.innerText = "Choose target";
-controls.appendChild(chooseTargetButton);
+const setTargetButton = document.createElement("button");
+setTargetButton.id = "set-target";
+setTargetButton.innerText = "Set target";
+setTargetButton.addEventListener("click", toggleSetTargetCursor);
+controls.appendChild(setTargetButton);
 
 const traverseButton = document.createElement("button");
 traverseButton.id = "traverse";
 traverseButton.innerText = "Traverse";
+traverseButton.disabled = true;
+traverseButton.addEventListener("click", () => {
+  const knight = document.querySelector("#knight-piece");
+  const originPosition = JSON.parse(
+    `{"x": ${knight.parentElement.getAttribute(
+      "data-position-x"
+    )}, "y": ${knight.parentElement.getAttribute("data-position-y")}}`
+  );
+  const target = document.querySelector("#target");
+  const targetPosition = JSON.parse(
+    `{"x": ${target.getAttribute(
+      "data-position-x"
+    )}, "y": ${target.getAttribute("data-position-y")}}`
+  );
+  const shortestPath = knightMoves(originPosition, targetPosition);
+  traverse(shortestPath);
+  traverseButton.disabled = true;
+});
 controls.appendChild(traverseButton);
+
+function clearBoard() {
+  clearKnight();
+  clearTarget();
+  clearMoves();
+  checkTraverseButtonState();
+}
 
 const clearButton = document.createElement("button");
 clearButton.id = "clear";
 clearButton.innerText = "Clear";
+clearButton.addEventListener("click", clearBoard);
 controls.appendChild(clearButton);
+
+window.addEventListener("resize", clearBoard);

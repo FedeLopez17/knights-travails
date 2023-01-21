@@ -1,6 +1,9 @@
 :root {
   --cells-white: #f5f5f5;
   --cells-black: #292f2f;
+  --place-knight-cells-color: lightgreen;
+  --set-target-cells-color: red;
+  --move-cells-color: skyblue;
   --chess-board-lables-font-size: 22px;
   font-size: 16px;
 }
@@ -13,6 +16,11 @@ body {
   align-items: center;
   font-family: "Roboto", sans-serif;
   background-color: lightblue;
+  overflow-x: hidden;
+}
+
+body.place-knight {
+  cursor: none;
 }
 
 h1#title {
@@ -34,6 +42,8 @@ main {
   aspect-ratio: 1/1;
   width: min(90vmin, 600px);
   display: flex;
+  pointer-events: none;
+  outline: solid 1px black;
 }
 
 #chess-board .column {
@@ -46,7 +56,45 @@ main {
 #chess-board .cell {
   flex: 1;
   position: relative;
-  outline: solid 1px black;
+  pointer-events: auto;
+  position: relative;
+  display: flex;
+}
+
+body.no-cursor #chess-board .cell {
+  cursor: none;
+}
+
+body.place-knight #chess-board .cell:hover {
+  background: var(--place-knight-cells-color);
+}
+
+#chess-board #starting-position {
+  background-color: var(--place-knight-cells-color);
+}
+
+body.set-target #chess-board .cell:hover {
+  cursor: pointer;
+  background: var(--set-target-cells-color);
+}
+
+#chess-board #target {
+  background-color: var(--set-target-cells-color);
+}
+
+#chess-board .move {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#chess-board .cell:not(#target) .move {
+  background-color: var(--move-cells-color);
+}
+
+#chess-board .move p {
+  margin: 0;
 }
 
 #chess-board .cell.white {
@@ -63,6 +111,7 @@ main {
   margin: 0;
   font-family: "Roboto Mono", monospace;
   font-size: 1rem;
+  z-index: 1;
 }
 
 #chess-board .cell.white .label {
@@ -87,6 +136,40 @@ main {
 #controls button {
   flex: 1;
   aspect-ratio: 3/1;
+  cursor: pointer;
+}
+
+#controls button.active {
+  border: solid 2px red;
+}
+
+#knight-piece {
+  width: 100%;
+  position: absolute;
+  bottom: 25%;
+  right: 0%;
+  transition-property: all;
+  transition-duration: 0.5s;
+  z-index: 2;
+}
+
+.custom-cursor {
+  z-index: 2;
+}
+
+.custom-cursor.hidden {
+  display: none;
+}
+
+#knight-cursor {
+  cursor: none;
+  pointer-events: none;
+  position: absolute;
+  aspect-ratio: 1/1;
+  width: 50px;
+  background-image: url("./images/knight.png");
+  background-size: contain;
+  background-repeat: no-repeat;
 }
 
 @media (orientation: portrait), (max-width: 600px) {

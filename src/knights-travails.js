@@ -33,34 +33,3 @@ export default function knightMoves(queue, target) {
 
   return knightMoves(queue, target);
 }
-
-// Tests:
-
-console.log("knightMoves({ x: 3, y: 3 }, { x: 4, y: 3 })");
-console.log("expected outcome: ");
-console.log("[{x: 3, y: 3}, {x: 4, y: 5}, {x: 2, y: 4}, {x: 4, y: 3}]");
-console.log("outcome:");
-console.log(JSON.stringify(knightMoves({ x: 3, y: 3 }, { x: 4, y: 3 })));
-console.log("");
-
-console.log("knightMoves({ x: 0, y: 0 }, { x: 1, y: 2 })");
-console.log("expected outcome:");
-console.log("[{x: 0, y: 0}, {x: 1, y: 2}]");
-console.log("outcome:");
-console.log(JSON.stringify(knightMoves({ x: 0, y: 0 }, { x: 1, y: 2 })));
-console.log("");
-
-console.log("knightMoves({ x: 3, y: 3 }, { x: 7, y: 6 })");
-console.log("expected outcome:");
-console.log("[{x: 3, y: 3}, {x: 4, y: 5}, {x: 5, y: 7}, {x: 7, y: 6}]");
-console.log("outcome:");
-console.log(JSON.stringify(knightMoves({ x: 3, y: 3 }, { x: 7, y: 6 })));
-console.log("");
-
-console.log("knightMoves({ x: 0, y: 0 }, { x: 7, y: 7 })");
-console.log("expected outcome:");
-console.log(
-  "[{x: 0, y: 0}, {x: 1, y: 2}, {x: 0, y: 4}, {x: 1, y: 6}, {x: 3, y: 7}, {x: 5, y: 6}, {x: 7, y: 7}]"
-);
-console.log("outcome:");
-console.log(JSON.stringify(knightMoves({ x: 0, y: 0 }, { x: 7, y: 7 })));

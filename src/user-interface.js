@@ -1,3 +1,4 @@
+import favicon from "./images/favicon.ico";
 import "./style.css";
 import knightMoves from "./knights-travails.js";
 import {

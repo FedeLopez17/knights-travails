@@ -77,7 +77,7 @@ const chessBoard = document.querySelector("#chess-board");
 const CHESSBOARD_WIDTH = 8;
 const CHESSBOARD_HEIGHT = 8;
 
-const COLUMN_COLORS = { even: "white", odd: "black" };
+const COLUMN_COLORS = { even: "black", odd: "white" };
 
 for (let column = 0; column < CHESSBOARD_WIDTH; column++) {
   const columnSection = document.createElement("section");

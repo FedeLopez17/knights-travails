@@ -13,8 +13,8 @@ export default async function traverse(path) {
   const knight = document.querySelector("#knight-piece");
   const knightStyle = window.getComputedStyle(knight);
   const originalKnightBottomMargin = knightStyle.getPropertyValue("bottom");
-  // Here, I get something like "1s", so get rid of the "s" and multiply it by a thousand
-  // so I can get the property in miliseconds (without the "ms" unit) and pass it as the argument for the pause function
+  // In line 19, getPropertyValue returns something like "1s", so I get rid of the "s" and multiply it by a thousand
+  // in order to get the property in miliseconds (without the "ms" unit) and pass it as the argument for the pause function
   const knightTransitionDuration =
     knightStyle.getPropertyValue("transition-duration").slice(0, -1) * 1000;
 

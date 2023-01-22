@@ -122,7 +122,7 @@ body.set-target #chess-board .cell:hover {
   color: var(--cells-white);
 }
 
-#chess-board .cell#column-zero-row-zero .column.label {
+#chess-board .cell[data-position="column-zero-row-zero"] .column.label {
   margin-left: 1ch;
 }
 

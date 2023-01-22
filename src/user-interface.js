@@ -95,13 +95,16 @@ for (let column = 0; column < CHESSBOARD_WIDTH; column++) {
         placeKnight(cell);
         togglePlaceKnightCursor();
       } else if (setTargetCursor) {
+        // Knight's target can't be equal to its starting point
+        const knight = document.querySelector("#knight-piece");
+        if (knight && knight.parentElement === cell) return;
         setTarget(cell);
         toggleSetTargetCursor();
       }
     });
 
     if (column === 0 && row === 0) {
-      cell.id = "column-zero-row-zero";
+      cell.setAttribute("data-position", "column-zero-row-zero");
     }
 
     if (column === 0) {
@@ -181,4 +184,10 @@ clearButton.innerText = "Clear";
 clearButton.addEventListener("click", clearBoard);
 controls.appendChild(clearButton);
 
-window.addEventListener("resize", clearBoard);
+// Hide the knight piece if the browser is resized during traversal as resizing then would mess up the knight's position
+window.addEventListener("resize", () => {
+  // If the place knight button is enabled, that means the traversal isn't taking place
+  if (!placeKnightButton.disabled) return;
+  const knight = document.querySelector("#knight-piece");
+  knight.style.opacity = 0;
+});

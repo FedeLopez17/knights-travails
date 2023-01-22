@@ -1,6 +1,8 @@
 import knightImageSrc from "./images/knight.png";
+import playChessPieceSound from "./sound-effects.js";
 
 export function placeKnight(cell) {
+  playChessPieceSound();
   const knight = document.createElement("img");
   knight.src = knightImageSrc;
   knight.id = "knight-piece";

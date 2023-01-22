@@ -191,3 +191,18 @@ window.addEventListener("resize", () => {
   const knight = document.querySelector("#knight-piece");
   knight.style.opacity = 0;
 });
+
+// Build volume toggle:
+let volume = true;
+
+const volumeToggle = document.createElement("i");
+volumeToggle.id = "volume-toggle";
+volumeToggle.setAttribute("data-volume", volume);
+volumeToggle.classList.add("fa-solid", "fa-volume-high");
+volumeToggle.addEventListener("click", () => {
+  volumeToggle.classList.toggle("fa-volume-high");
+  volumeToggle.classList.toggle("fa-volume-xmark");
+  volume = !volume;
+  volumeToggle.setAttribute("data-volume", volume);
+});
+body.appendChild(volumeToggle);

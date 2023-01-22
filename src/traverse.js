@@ -1,3 +1,5 @@
+import playChessPieceSound from "./sound-effects.js";
+
 async function pause(pauseDuration) {
   return new Promise((resolve) => {
     setTimeout(resolve, pauseDuration);
@@ -86,6 +88,8 @@ export default async function traverse(path) {
         await pause(knightTransitionDuration * 1.5);
       }
     }
+
+    playChessPieceSound();
 
     const currentMove = document.createElement("section");
     currentMove.classList.add("move");

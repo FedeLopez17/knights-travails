@@ -35,61 +35,50 @@ export default async function traverse(path) {
     if (currentPosition.y === previousPosition.y + 2) {
       knight.style.bottom = `calc(${previousBottomMargin} + 200%)`;
       await pause(knightTransitionDuration);
-
       // left
       if (currentPosition.x === previousPosition.x - 1) {
         knight.style.right = `calc(${previousRightMargin} + 100%)`;
-        await pause(knightTransitionDuration * 1.5);
       } else {
         // right
         knight.style.right = `calc(${previousRightMargin} - 100%)`;
-        await pause(knightTransitionDuration * 1.5);
       }
       // bottom
     } else if (currentPosition.y === previousPosition.y - 2) {
       knight.style.bottom = `calc(${previousBottomMargin} - 200%)`;
       await pause(knightTransitionDuration);
-
       // left
       if (currentPosition.x === previousPosition.x - 1) {
         knight.style.right = `calc(${previousRightMargin} + 100%)`;
-        await pause(knightTransitionDuration * 1.5);
       } else {
         // right
         knight.style.right = `calc(${previousRightMargin} - 100%)`;
-        await pause(knightTransitionDuration * 1.5);
       }
       // left
     } else if (currentPosition.x === previousPosition.x - 2) {
       knight.style.right = `calc(${previousRightMargin} + 200%)`;
       await pause(knightTransitionDuration);
-
       // top
       if (currentPosition.y === previousPosition.y + 1) {
         knight.style.bottom = `calc(${previousBottomMargin} + 100%)`;
-        await pause(knightTransitionDuration * 1.5);
       } else {
         // bottom
         knight.style.bottom = `calc(${previousBottomMargin} - 100%)`;
-        await pause(knightTransitionDuration * 1.5);
       }
       // right
     } else {
       knight.style.right = `calc(${previousRightMargin} - 200%)`;
       await pause(knightTransitionDuration);
-
       // top
       if (currentPosition.y === previousPosition.y + 1) {
         knight.style.bottom = `calc(${previousBottomMargin} + 100%)`;
-        await pause(knightTransitionDuration * 1.5);
       } else {
         // bottom
         knight.style.bottom = `calc(${previousBottomMargin} - 100%)`;
-        await pause(knightTransitionDuration * 1.5);
       }
     }
-
+    await pause(knightTransitionDuration);
     playChessPieceSound();
+    await pause(knightTransitionDuration * 2);
 
     const currentMove = document.createElement("section");
     currentMove.classList.add("move");

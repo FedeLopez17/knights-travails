@@ -207,3 +207,16 @@ volumeToggle.addEventListener("click", () => {
   volumeToggle.setAttribute("data-volume", volume);
 });
 body.appendChild(volumeToggle);
+
+// Build github link
+const githubLink = document.createElement("a");
+githubLink.setAttribute(
+  "href",
+  "https://github.com/FedeLopez17/knights-travails"
+);
+githubLink.setAttribute("target", "_blank");
+const githubIcon = document.createElement("i");
+githubIcon.id = "github-icon";
+githubIcon.classList.add("fa-brands", "fa-github");
+githubLink.appendChild(githubIcon);
+body.appendChild(githubLink);

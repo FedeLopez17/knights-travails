@@ -193,18 +193,35 @@ body.set-target #chess-board .cell:hover {
   background-repeat: no-repeat;
 }
 
-#volume-toggle {
+#volume-toggle,
+#github-icon {
   position: absolute;
-  right: 2%;
+
   top: 2%;
   cursor: pointer;
   font-size: 1.5rem;
   filter: brightness(0.8);
 }
 
-#volume-toggle:hover {
+#volume-toggle:hover,
+#github-icon:hover {
   transform: scale(1.02);
   filter: brightness(1);
+}
+
+#github-icon {
+  right: 2%;
+}
+
+#volume-toggle {
+  right: calc(2% + 1.5rem + 1%);
+}
+
+a,
+a:visited,
+a:hover,
+a:active {
+  color: white;
 }
 
 @media (orientation: portrait), (max-width: 600px) {

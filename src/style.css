@@ -40,7 +40,7 @@ main {
 
 #chess-board {
   aspect-ratio: 1/1;
-  width: min(90vmin, 600px);
+  width: min(60vmin, 600px);
   display: flex;
   pointer-events: none;
   outline: solid 1px black;
@@ -175,5 +175,9 @@ body.set-target #chess-board .cell:hover {
 @media (orientation: portrait), (max-width: 600px) {
   :root {
     font-size: 12px;
+  }
+
+  #chess-board {
+    width: min(90vmin, 600px);
   }
 }
